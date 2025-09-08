@@ -72,12 +72,12 @@ export default function Calendar({ onSelectDate, events = [] }: CalendarProps) {
           key={i}
           className="text-center font-semibold text-gray-700 text-xs first-letter:uppercase"
         >
-          {format(addDays(date, i), "EEE", { locale: ptBR })}
+          {format(addDays(date, i), "EEE", { locale: ptBR }).slice(0, 3)}
         </div>
       );
     }
 
-    return <div className="grid grid-cols-7 mb-4">{days}</div>;
+    return <div className="grid grid-cols-7 mb-2">{days}</div>;
   };
 
 const renderCells = () => {
