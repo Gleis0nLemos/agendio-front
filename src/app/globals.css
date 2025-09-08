@@ -11,6 +11,17 @@
   }
 }
  
+
+select::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+select::-webkit-scrollbar-thumb {
+  background: #222; /* cor escura */
+  border-radius: 8px;
+}
+
+
 /*
 html,
 body {
