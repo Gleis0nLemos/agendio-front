@@ -43,22 +43,30 @@ export default function Calendar({ onSelectDate, events = [] }: CalendarProps) {
   };
 
   const renderHeader = () => (
-    <div className="flex justify-between items-center mb-6">
-      <button
-        onClick={prevMonth}
-        className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 text-lg"
-      >
-        ←
-      </button>
-      <h2 className="text-3xl font-bold capitalize">
+    <div className="flex justify-between mb-2 gap-2">
+      <h2 className="text-xs text-gray-400 font-bold capitalize">
         {format(currentMonth, "MMMM yyyy", { locale: ptBR })}
       </h2>
-      <button
-        onClick={nextMonth}
-        className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 text-lg"
-      >
-        →
+      <div className="flex">
+        <button
+          onClick={prevMonth}
+          className="text-foreground px-1 rounded-md text-zinc-500 hover:bg-zinc-700 hover:text-zinc-400"
+        >
+          &lt;
+        </button>
+        <button
+          onClick={() => setCurrentMonth(new Date())}
+          className="px-1 rounded-md text-sm text-zinc-400 hover:bg-zinc-700"
+        >
+            Atual
+        </button>
+        <button
+          onClick={nextMonth}
+          className="text-foreground px-1 rounded-md text-zinc-500 hover:bg-zinc-700 hover:text-zinc-400"
+        >
+          &gt;
       </button>
+      </div>
     </div>
   );
 
