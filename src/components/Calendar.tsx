@@ -42,33 +42,76 @@ export default function Calendar({ onSelectDate, events = [] }: CalendarProps) {
     return events.filter((e) => isSameDay(e.date, day));
   };
 
-  const renderHeader = () => (
-    <div className="flex justify-between mb-2 gap-2">
-      <h2 className="text-xs text-gray-400 font-bold capitalize">
-        {format(currentMonth, "MMMM yyyy", { locale: ptBR })}
-      </h2>
-      <div className="flex">
-        <button
-          onClick={prevMonth}
-          className="text-foreground px-1 rounded-md text-zinc-500 hover:bg-zinc-700 hover:text-zinc-400"
-        >
-          &lt;
-        </button>
-        <button
-          onClick={() => setCurrentMonth(new Date())}
-          className="px-1 rounded-md text-sm text-zinc-400 hover:bg-zinc-700"
-        >
+  const renderHeader = () => {
+    const months = [
+      "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+      "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+    ];
+
+    // Gerar anos (por exemplo, ±10 anos do atual)
+    const currentYear = new Date().getFullYear();
+    const years = Array.from({ length: 21 }, (_, i) => currentYear - 10 + i);
+
+    return (
+      <div className="flex justify-between mb-2 gap-2 items-center">
+        {/* Dropdown mês e ano */}
+        <div className="flex gap-1 items-center">
+          <select
+            value={currentMonth.getMonth()}
+            onChange={(e) => {
+              const newMonth = Number(e.target.value);
+              setCurrentMonth(new Date(currentMonth.getFullYear(), newMonth, 1));
+            }}
+            className="bg-zinc-900 text-zinc-200 px-2 py-1 rounded-md text-sm  scrollbar-none
+              focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-opacity-50
+            "
+          >
+            {months.map((m, i) => (
+              <option key={i} value={i}>{m}</option>
+            ))}
+          </select>
+
+          <select
+            value={currentMonth.getFullYear()}
+            onChange={(e) => {
+              const newYear = Number(e.target.value);
+              setCurrentMonth(new Date(newYear, currentMonth.getMonth(), 1));
+            }}
+            className="bg-zinc-900 text-zinc-200 px-2 py-1 rounded-md text-sm
+              focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-opacity-50
+            "
+          >
+            {years.map((y) => (
+              <option key={y} value={y}>{y}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Botões de navegação */}
+        <div className="flex gap-1">
+          <button
+            onClick={prevMonth}
+            className="px-2 rounded-md text-zinc-500 hover:bg-zinc-800 hover:text-zinc-400"
+          >
+            &lt;
+          </button>
+          <button
+            onClick={() => setCurrentMonth(new Date())}
+            className="px-2 rounded-md text-sm text-zinc-400 hover:bg-zinc-800"
+          >
             Atual
-        </button>
-        <button
-          onClick={nextMonth}
-          className="text-foreground px-1 rounded-md text-zinc-500 hover:bg-zinc-700 hover:text-zinc-400"
-        >
-          &gt;
-      </button>
+          </button>
+          <button
+            onClick={nextMonth}
+            className="px-2 rounded-md text-zinc-500 hover:bg-zinc-800 hover:text-zinc-400"
+          >
+            &gt;
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
+
 
   const renderDays = () => {
     const days = [];
