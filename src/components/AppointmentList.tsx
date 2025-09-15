@@ -4,6 +4,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import { User2 } from "lucide-react";
 import { GoKebabHorizontal } from "react-icons/go";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 interface Appointment {
   id: number;
@@ -15,7 +16,9 @@ interface Appointment {
   phone: string;
   status?: "concluído" | "cancelado" | "pendente";
   userPhoto?: string;
+  professional: string; // novo campo
 }
+
 
 interface AppointmentListProps {
   date: Date | null;
@@ -32,6 +35,7 @@ const mockAppointments: Record<string, Appointment[]> = {
       service: "Corte de cabelo + barba",
       phone: "(85) 9123456789",
       status: "pendente",
+      professional: "Maria Silva",
     },
     {
       id: 2,
@@ -42,6 +46,7 @@ const mockAppointments: Record<string, Appointment[]> = {
       service: "Coloração",
       phone: "987654321",
       status: "concluído",
+      professional: "Carlos Pereira",
     },
     {
       id: 3,
@@ -52,6 +57,7 @@ const mockAppointments: Record<string, Appointment[]> = {
       service: "Corte de cabelo + barba",
       phone: "(85) 9123456789",
       status: "pendente",
+      professional: "Maria Silva",
     },
     {
       id: 4,
@@ -62,6 +68,7 @@ const mockAppointments: Record<string, Appointment[]> = {
       service: "Coloração",
       phone: "987654321",
       status: "concluído",
+      professional: "Carlos Pereira",
     },
     {
       id: 55,
@@ -72,6 +79,7 @@ const mockAppointments: Record<string, Appointment[]> = {
       service: "Corte de cabelo + barba",
       phone: "(85) 9123456789",
       status: "pendente",
+      professional: "Maria Silva",
     }
   ],
   "2025-09-05": [
@@ -84,11 +92,30 @@ const mockAppointments: Record<string, Appointment[]> = {
       service: "Barba",
       phone: "456123789",
       status: "cancelado",
+      professional: "Ana Costa",
     },
   ],
 };
 
 export default function AppointmentList({ date }: AppointmentListProps) {
+
+  const [selectedProfessional, setSelectedProfessional] = useState<string>("");
+
+  const dateKey = date ? format(date, "yyyy-MM-dd") : "";
+  const appointments = date ? mockAppointments[dateKey] || [] : [];
+  const professionals = Array.from(
+    new Set(appointments.map((a) => a.professional))
+  );
+
+  useEffect(() => {
+    if (
+      professionals.length > 0 &&
+      !professionals.includes(selectedProfessional)
+    ) {
+      setSelectedProfessional(professionals[0]);
+    }
+  }, [dateKey, professionals, selectedProfessional]);
+
   if (!date) {
     return (
       <p className="text-gray-500 text-sm">
@@ -97,17 +124,34 @@ export default function AppointmentList({ date }: AppointmentListProps) {
     );
   }
 
-  const dateKey = format(date, "yyyy-MM-dd");
-  const appointments = mockAppointments[dateKey] || [];
+  const filteredAppointments = appointments.filter(
+    (a) => a.professional === selectedProfessional
+  );
+
 
   return (
     <div className="lg:w-[400px] rounded-xl shadow">
       <h2 className="text-lg text-zinc-400 font-semibold">
         {format(date, "dd 'de' MMMM yyyy", { locale: ptBR })}
       </h2>
+      <div className="flex gap-1 my-3">
+        {professionals.map((p) => (
+          <button
+            key={p}
+            onClick={() => setSelectedProfessional(p)}
+            className={`px-3 py-1 rounded-sm text-sm  ${
+              selectedProfessional === p
+                ? "bg-foreground text-zinc-900"
+                : "bg-zinc-900 text-zinc-400"
+            }`}
+          >
+            {p}
+          </button>
+        ))}
+      </div>
       {appointments.length > 0 ? (
         <ul className="space-y-2">
-          {appointments.map((a) => (
+          {filteredAppointments.map((a) => (
             <li
               key={a.id}
               className="border bg-zinc-950 rounded-md border-zinc-800 flex"
@@ -137,7 +181,7 @@ export default function AppointmentList({ date }: AppointmentListProps) {
               </div>
 
 
-              <div className="flex flex-col flex-1">
+              <div className="flex flex-col flex-1 ml-3">
                 
                 <div className="flex flex-col gap-1">
                   <div className="flex justify-between items-center pt-3">
