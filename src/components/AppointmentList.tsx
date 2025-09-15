@@ -5,6 +5,8 @@ import { User2 } from "lucide-react";
 import { GoKebabHorizontal } from "react-icons/go";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { IoIosAdd } from "react-icons/io";
+
 
 interface Appointment {
   id: number;
@@ -134,21 +136,31 @@ export default function AppointmentList({ date }: AppointmentListProps) {
       <h2 className="text-lg text-zinc-400 font-semibold">
         {format(date, "dd 'de' MMMM yyyy", { locale: ptBR })}
       </h2>
-      <div className="flex gap-1 my-3">
+    {/* Menu de profissionais */}
+    <div className="flex items-center gap-1 mb-1">
+      {/* Lista de profissionais */}
+      <div className="flex gap-1">
         {professionals.map((p) => (
           <button
             key={p}
             onClick={() => setSelectedProfessional(p)}
-            className={`px-3 py-1 rounded-sm text-sm  ${
+            className={`px-3 py-1 rounded-md text-sm ${
               selectedProfessional === p
-                ? "bg-foreground text-zinc-900"
-                : "bg-zinc-900 text-zinc-400"
+                ? "bg-foreground text-zinc-800 font-medium"
+                : "bg-zinc-900 text-zinc-400 hover:bg-zinc-700"
             }`}
           >
             {p}
           </button>
         ))}
       </div>
+
+      {/* Botão adicionar profissional */}
+      <button className="flex items-center bg-background hover:bg-zinc-800 text-white px-1 py-1 rounded-md">
+        <IoIosAdd className="w-4 h-4" />
+      </button>
+    </div>
+      
       {appointments.length > 0 ? (
         <ul className="space-y-2">
           {filteredAppointments.map((a) => (
