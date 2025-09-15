@@ -88,7 +88,7 @@ export default function Calendar({ onSelectDate, events = [] }: CalendarProps) {
         </div>
 
         {/* Botões de navegação */}
-        <div className="flex gap-1">
+        <div className="flex">
           <button
             onClick={prevMonth}
             className="px-2 rounded-md text-zinc-500 hover:bg-zinc-800 hover:text-zinc-400"
@@ -152,7 +152,7 @@ const renderCells = () => {
       <div
         key={day.toString()}
         onClick={() => handleSelect(cloneDay)}
-        className={`p-2 w-full h-28 text-left border-r border-b border-gray-700 cursor-pointer relative overflow-hidden flex flex-col
+        className={`p-2 w-full h-28 text-left border-r border-b border-zinc-800 cursor-pointer relative overflow-hidden flex flex-col
           ${!isSameMonth(day, monthStart) ? "bg-neutral-900 text-gray-400" : "bg-background text-gray-400"}
           ${
             selectedDate && isSameDay(day, selectedDate)
@@ -197,7 +197,7 @@ const renderCells = () => {
   }
 
   return (
-    <div className="grid grid-cols-5 md:grid-cols-7 border-l border-t border-gray-700">
+    <div className="grid grid-cols-5 md:grid-cols-7 border-l border-t border-zinc-800">
       {days}
     </div>
   );
@@ -205,7 +205,7 @@ const renderCells = () => {
 
 
   return (
-    <div className="bg-background rounded-2xl shadow-lg">
+    <div className="bg-background w-full rounded-2xl shadow-lg">
       {renderHeader()}
       {renderDays()}
       {renderCells()}
