@@ -113,14 +113,29 @@ export default function AppointmentList({ date }: AppointmentListProps) {
               className="border bg-zinc-950 rounded-md border-zinc-800 flex"
             >
               <div className="flex flex-col items-center justify-center border-r border-zinc-800 px-4 text-center">
+                {/* Hora inicial */}
                 <span className="text-foreground text-sm">{a.time}</span>
+
+                {/* Linha com bolinhas nas pontas */}
                 {a.endTime && (
-                  <>
-                    <span className="block h-4 w-px bg-zinc-600 my-1"></span>
-                    <span className="text-foreground text-sm">{a.endTime}</span>
-                  </>
+                  <div className="flex flex-col items-center">
+                    {/* bolinha superior */}
+                    <span className="w-1 h-1 rounded-full bg-zinc-400"></span>
+
+                    {/* linha */}
+                    <span className="block w-px h-6 bg-zinc-600"></span>
+
+                    {/* bolinha inferior */}
+                    <span className="w-1 h-1 rounded-full bg-zinc-400"></span>
+                  </div>
+                )}
+
+                {/* Hora final */}
+                {a.endTime && (
+                  <span className="text-foreground text-sm">{a.endTime}</span>
                 )}
               </div>
+
 
               <div className="flex flex-col flex-1">
                 
