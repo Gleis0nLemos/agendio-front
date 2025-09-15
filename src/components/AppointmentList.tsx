@@ -8,7 +8,8 @@ import Image from "next/image";
 interface Appointment {
   id: number;
   client: string;
-  time: string;
+  time: string; // início
+  endTime?: string; // fim
   price: number;
   service: string;
   phone: string;
@@ -26,6 +27,7 @@ const mockAppointments: Record<string, Appointment[]> = {
       id: 1,
       client: "João Silva",
       time: "09:00",
+      endTime: "10:00",
       price: 100,
       service: "Corte de cabelo + barba",
       phone: "(85) 9123456789",
@@ -35,6 +37,7 @@ const mockAppointments: Record<string, Appointment[]> = {
       id: 2,
       client: "Maria Souza",
       time: "11:30",
+      endTime: "12:30",
       price: 80,
       service: "Coloração",
       phone: "987654321",
@@ -44,6 +47,7 @@ const mockAppointments: Record<string, Appointment[]> = {
       id: 3,
       client: "João Silva",
       time: "09:00",
+      endTime: "10:00",
       price: 100,
       service: "Corte de cabelo + barba",
       phone: "(85) 9123456789",
@@ -53,6 +57,7 @@ const mockAppointments: Record<string, Appointment[]> = {
       id: 4,
       client: "Maria Souza",
       time: "11:30",
+      endTime: "12:30",
       price: 80,
       service: "Coloração",
       phone: "987654321",
@@ -62,6 +67,7 @@ const mockAppointments: Record<string, Appointment[]> = {
       id: 55,
       client: "João Silva",
       time: "09:00",
+      endTime: "10:00",
       price: 100,
       service: "Corte de cabelo + barba",
       phone: "(85) 9123456789",
@@ -73,6 +79,7 @@ const mockAppointments: Record<string, Appointment[]> = {
       id: 3,
       client: "Carlos Pereira",
       time: "14:00",
+      endTime: "15:00",
       price: 120,
       service: "Barba",
       phone: "456123789",
@@ -105,9 +112,16 @@ export default function AppointmentList({ date }: AppointmentListProps) {
               key={a.id}
               className="border bg-zinc-950 rounded-md border-zinc-800 flex"
             >
-              <div className="flex flex-col justify-center border-r border-zinc-800 pr-4 mx-4 text-center">
-                <span className="text-foreground">{a.time}</span>
+              <div className="flex flex-col items-center justify-center border-r border-zinc-800 px-4 text-center">
+                <span className="text-foreground text-sm">{a.time}</span>
+                {a.endTime && (
+                  <>
+                    <span className="block h-4 w-px bg-zinc-600 my-1"></span>
+                    <span className="text-foreground text-sm">{a.endTime}</span>
+                  </>
+                )}
               </div>
+
               <div className="flex flex-col flex-1">
                 
                 <div className="flex flex-col gap-1">
