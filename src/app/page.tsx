@@ -97,17 +97,48 @@
 import { useState } from "react";
 import Calendar from "@/components/Calendar";
 import AppointmentList from "@/components/AppointmentList";
+import Sidebar from "@/components/Sidebar";
 
 export default function DashboardPage() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [currentSection, setCurrentSection] = useState("agenda");
 
   return (
-    <main className="min-h-screen p-6 bg-background">
-      <h1 className="text-2xl font-bold mb-6">Painel da Empresa</h1>
+    <main className="min-h-screen bg-background flex justify-center">
+      <div className="w-full max-w-7xl">
+        <div className="flex items-start gap-2">
+          <div className="flex-none">
+            <Sidebar onChangeSection={setCurrentSection} />
+          </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Calendar onSelectDate={setSelectedDate} />
-        <AppointmentList date={selectedDate} />
+          {/* Área principal (título + conteúdo) */}
+          <div className="flex-1">
+            <div className="flex items-center justify-between mb-6">
+              <h1 className="text-2xl font-bold">Painel da Empresa</h1>
+            </div>
+
+            {currentSection === "agenda" && (
+              <div className="flex flex-col md:flex-row gap-2">
+                <div className="flex-none w-full md:w-[720px]">
+                  <Calendar onSelectDate={setSelectedDate} />
+                </div>
+
+                <div className="flex-none w-full md:w-[420px]">
+                  <AppointmentList date={selectedDate} />
+                </div>
+              </div>
+            )}
+
+            {currentSection === "empresa" && (
+              <div className="p-4 bg-neutral-900 rounded-xl text-center">
+                <h2 className="text-xl font-semibold mb-4">Dados da Empresa</h2>
+                <p className="text-gray-400">
+                  Aqui ficará a futura seção de dados da empresa…
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </main>
   );
