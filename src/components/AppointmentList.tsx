@@ -132,7 +132,7 @@ export default function AppointmentList({ date }: AppointmentListProps) {
 
 
   return (
-    <div className="lg:w-[400px] rounded-xl shadow">
+    <div className="lg:rounded-xl shadow">
       <h2 className="text-lg text-zinc-400 font-semibold">
         {format(date, "dd 'de' MMMM yyyy", { locale: ptBR })}
       </h2>
