@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import Calendar from "@/components/Calendar";
-import AppointmentList, { events } from "@/components/AppointmentList";
-import Sidebar from "@/components/Sidebar";
-import Header from "@/components/Header";
+import Calendar from "@/components/admin/Calendar";
+import AppointmentList, { events } from "@/components/admin/AppointmentList";
+import Sidebar from "@/components/admin/Sidebar";
+import Header from "@/components/admin/Header";
 
 export default function DashboardPage() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
