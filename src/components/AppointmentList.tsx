@@ -99,6 +99,19 @@ const mockAppointments: Record<string, Appointment[]> = {
   ],
 };
 
+export const events = Object.entries(mockAppointments).flatMap(([dateStr, appointments]) => {
+  // dateStr ex: "2025-09-02"
+  const [year, month, day] = dateStr.split("-").map(Number);
+  return appointments.map((a) => {
+    const [hour = 0, minute = 0] = a.time ? a.time.split(":").map(Number) : [];
+    return {
+      id: a.id,
+      title: `${a.client}`, //(${a.time})`
+      date: new Date(year, month - 1, day, hour, minute), // <--- evita shift de timezone
+    };
+  });
+});
+
 export default function AppointmentList({ date }: AppointmentListProps) {
 
   const [selectedProfessional, setSelectedProfessional] = useState<string>("");

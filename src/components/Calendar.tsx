@@ -39,8 +39,8 @@ export default function Calendar({ onSelectDate, events = [] }: CalendarProps) {
   };
 
   const getEventsForDay = (day: Date) => {
-    return events.filter((e) => isSameDay(e.date, day));
-  };
+  return events.filter((ev) => isSameDay(ev.date, day));
+};
 
   const renderHeader = () => {
     const months = [
@@ -169,7 +169,7 @@ const renderCells = () => {
           {dayEvents.slice(0, 3).map((event) => (
             <div
               key={event.id}
-              className="truncate text-xs bg-blue-600 text-white px-2 py-1 rounded-md"
+              className="truncate text-xs bg-zinc-600 text-white px-1 py-1 rounded-md"
             >
               {event.title}
             </div>
