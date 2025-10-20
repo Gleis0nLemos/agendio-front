@@ -2,6 +2,7 @@
 
 import UserGreeting from "@/components/user/UserGreeting";
 import SearchBar from "@/components/user/SearchBar";
+import AppointmentsSection from "@/components/user/AppointmentsSection";
 
 export default function UserPage() {
   const handleSearch = (query: string) => {
@@ -15,6 +16,7 @@ export default function UserPage() {
         placeholder="Buscar"
         onSearch={handleSearch}
       />
+      <AppointmentsSection />
     </div>
   );
 }
